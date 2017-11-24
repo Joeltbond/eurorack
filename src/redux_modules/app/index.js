@@ -1,5 +1,6 @@
 import { eventChannel } from "redux-saga";
 import { takeEvery, take, call, put } from "redux-saga/effects";
+import { createAudioContext } from "../../audio";
 
 const APP_MOUNTED = "app/APP_MOUNTED";
 const MIDI_UNSUPPORTED = "app/MIDI_UNSUPPORTED";
@@ -87,6 +88,7 @@ function* onMidiSuccess(midiAccess) {
 }
 
 function* appMountedSaga() {
+  yield call(createAudioContext);
   if (window.navigator.requestMIDIAccess) {
     try {
       const midiAccess = yield call(
